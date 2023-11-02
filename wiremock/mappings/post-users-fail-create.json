@@ -1,0 +1,13 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "POST",
+    "urlPath": "/users",
+    "bodyPatterns": [
+      { "contains": "fail-create-user@example.com" }
+    ]
+  },
+  "response": {
+    "status": 500
+  }
+}

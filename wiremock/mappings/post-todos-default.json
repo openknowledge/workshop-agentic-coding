@@ -1,0 +1,12 @@
+{
+  "priority": 10,
+  "request": {
+    "method": "POST",
+    "urlPath": "/todos"
+  },
+  "response": {
+    "status": 201,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": { "id": 201, "userId": 11, "title": "Send welcome email", "completed": false }
+  }
+}

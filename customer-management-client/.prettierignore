@@ -1,0 +1,24 @@
+# Build-Ausgabe
+dist
+build
+coverage
+target
+
+# Dependencies
+node_modules
+
+# Logs
+*.log
+
+# Lock-Dateien
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# IDE
+.idea
+.vscode
+
+# Andere
+*.min.js
+*.min.css

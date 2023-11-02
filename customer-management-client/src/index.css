@@ -1,0 +1,316 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+h1 {
+  font-size: 1.8em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+h2 {
+  font-size: 1.4em;
+  margin: 0;
+}
+
+/* App layout */
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid #444;
+  margin-bottom: 1.5rem;
+}
+
+.app-header nav a {
+  padding: 0.4em 0.8em;
+  border-radius: 4px;
+}
+
+.app-header nav a:hover {
+  background-color: rgba(100, 108, 255, 0.1);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+/* Buttons */
+
+.btn {
+  display: inline-block;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  padding: 0.5em 1em;
+  font-size: 0.9em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  color: inherit;
+  cursor: pointer;
+  transition:
+    border-color 0.25s,
+    background-color 0.25s;
+  text-decoration: none;
+}
+
+.btn:hover {
+  border-color: #646cff;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: #646cff;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #535bf2;
+}
+
+.btn-edit {
+  font-size: 0.85em;
+  padding: 0.3em 0.6em;
+}
+
+.btn-delete {
+  font-size: 0.85em;
+  padding: 0.3em 0.6em;
+  background-color: #c0392b;
+  color: #fff;
+}
+
+.btn-delete:hover {
+  background-color: #e74c3c;
+  border-color: #e74c3c;
+}
+
+/* Table */
+
+.table-container {
+  width: 100%;
+}
+
+.table-toolbar {
+  margin-bottom: 1rem;
+}
+
+.search-input {
+  padding: 0.5em 0.8em;
+  font-size: 0.9em;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background-color: #1a1a1a;
+  color: inherit;
+  width: 300px;
+  font-family: inherit;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.6em 0.8em;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+.data-table th {
+  font-weight: 600;
+  background-color: #1a1a1a;
+  white-space: nowrap;
+}
+
+.data-table th.sortable {
+  cursor: pointer;
+}
+
+.data-table tbody tr:hover {
+  background-color: rgba(100, 108, 255, 0.05);
+}
+
+.empty-row {
+  text-align: center;
+  color: #888;
+  padding: 2em 0;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.4em;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  margin-top: 1rem;
+  padding: 0.5em 0;
+}
+
+.pagination button {
+  padding: 0.4em 0.8em;
+  font-size: 0.85em;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background-color: #1a1a1a;
+  color: inherit;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Form */
+
+.customer-form {
+  max-width: 500px;
+}
+
+.form-field {
+  margin-bottom: 1rem;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 0.3em;
+  font-weight: 500;
+  font-size: 0.9em;
+}
+
+.form-field input {
+  width: 100%;
+  padding: 0.5em 0.8em;
+  font-size: 0.9em;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background-color: #1a1a1a;
+  color: inherit;
+  font-family: inherit;
+}
+
+.form-field input:focus {
+  outline: none;
+  border-color: #646cff;
+}
+
+.field-error {
+  display: block;
+  color: #e74c3c;
+  font-size: 0.8em;
+  margin-top: 0.2em;
+}
+
+.form-actions {
+  margin-top: 1.5rem;
+}
+
+.error-message {
+  background-color: rgba(231, 76, 60, 0.15);
+  border: 1px solid #e74c3c;
+  color: #e74c3c;
+  padding: 0.6em 1em;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 0.9em;
+}
+
+/* Light mode */
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+
+  a:hover {
+    color: #747bff;
+  }
+
+  .btn {
+    background-color: #f9f9f9;
+  }
+
+  .btn-primary {
+    background-color: #646cff;
+    color: #fff;
+  }
+
+  .btn-delete {
+    background-color: #c0392b;
+    color: #fff;
+  }
+
+  .search-input,
+  .form-field input {
+    background-color: #fff;
+    border-color: #ccc;
+  }
+
+  .data-table th {
+    background-color: #f5f5f5;
+  }
+
+  .data-table th,
+  .data-table td {
+    border-bottom-color: #ddd;
+  }
+
+  .pagination button {
+    background-color: #f9f9f9;
+    border-color: #ccc;
+  }
+}

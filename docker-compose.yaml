@@ -1,0 +1,46 @@
+services:
+  customer-management-database:
+    image: postgres:17
+    environment:
+      POSTGRES_PASSWORD: geheim
+    ports:
+      - 5432:5432
+
+  flyway:
+    image: flyway/flyway:10.22
+    command: migrate -locations=filesystem:/flyway/sql,filesystem:/flyway/testdata -user=postgres -password=geheim -connectRetries=60 -url=jdbc:postgresql://customer-management-database:5432/postgres
+    depends_on:
+      customer-management-database:
+        condition: service_started
+    volumes:
+      - ./customer-management-server/src/main/resources/db/migration:/flyway/sql
+      - ./customer-management-server/src/test/resources/db/testdata.sql:/flyway/testdata/V2.0.0__insert-testdata.sql
+
+  wiremock:
+    image: wiremock/wiremock:3.9.2
+    ports:
+      - 8089:8080
+    volumes:
+      - ./wiremock:/home/wiremock
+    command:
+      - --verbose
+
+  customer-management-server:
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_DATASOURCE_URL: jdbc:postgresql://customer-management-database:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: geheim
+      TODO_URL: http://wiremock:8080
+    depends_on:
+      customer-management-database:
+        condition: service_started
+      flyway:
+        condition: service_completed_successfully
+      wiremock:
+        condition: service_started
+

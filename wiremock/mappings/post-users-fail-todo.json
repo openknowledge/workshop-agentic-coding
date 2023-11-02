@@ -1,0 +1,15 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "POST",
+    "urlPath": "/users",
+    "bodyPatterns": [
+      { "contains": "fail-todo@example.com" }
+    ]
+  },
+  "response": {
+    "status": 201,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": { "id": 42, "name": "Fail Todo", "email": "fail-todo@example.com" }
+  }
+}

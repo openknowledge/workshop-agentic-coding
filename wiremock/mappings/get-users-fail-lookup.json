@@ -1,0 +1,13 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "GET",
+    "urlPath": "/users",
+    "queryParameters": {
+      "email": { "equalTo": "fail-lookup@example.com" }
+    }
+  },
+  "response": {
+    "status": 500
+  }
+}

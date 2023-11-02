@@ -1,0 +1,49 @@
+# === Build-Output (wird im Container neu erzeugt) ===
+customer-management-client/node_modules
+customer-management-client/dist
+customer-management-client/target
+customer-management-server/target
+
+# === Test-Output (im Container nicht benoetigt) ===
+customer-management-client/playwright-report
+customer-management-client/test-results
+customer-management-client/.nyc_output
+customer-management-client/coverage
+
+# === IDE-/Editor-Metadaten ===
+.idea
+.vscode
+*.iml
+**/.classpath
+**/.project
+**/.checkstyle
+**/.java-version
+**/.settings
+
+# === Git ===
+.git
+.gitignore
+.github/
+.gitattributes
+
+# === Maven Wrapper (im Build-Image nicht benoetigt) ===
+**/mvnw
+**/mvnw.cmd
+**/.mvn
+
+# === Lokale Konfiguration (darf nicht ins Image) ===
+**/spring.profiles.active.local.properties
+**/application-local.properties
+
+# === Dokumentation / Setup ===
+README.md
+LICENSE
+
+# === Docker / CI Artefakte (Dockerfile selbst NICHT ausschliessen!) ===
+docker-compose*.yaml
+docker-compose*.yml
+
+# === Sonstige Artefakte ===
+*.log
+.DS_Store
+Thumbs.db

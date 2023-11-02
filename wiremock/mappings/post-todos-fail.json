@@ -1,0 +1,13 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "POST",
+    "urlPath": "/todos",
+    "bodyPatterns": [
+      { "matchesJsonPath": "$[?(@.userId == 42)]" }
+    ]
+  },
+  "response": {
+    "status": 500
+  }
+}
