@@ -4,3 +4,4 @@
 !.dockerignore
 */target/
 */node/
+!.junie/commands/
