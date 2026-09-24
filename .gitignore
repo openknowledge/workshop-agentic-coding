@@ -1,6 +1,10 @@
 .*
 !.github
 !.gitignore
+!.gitattributes
 !.dockerignore
+!.agents
+!.junie
+!.mvn
 */target/
 */node/
