@@ -217,7 +217,8 @@ h2 {
 /* Form */
 
 .customer-form {
-  max-width: 500px;
+  max-width: 140px;
+  margin: 0 auto;
 }
 
 .form-field {
