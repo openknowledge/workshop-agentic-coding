@@ -78,3 +78,47 @@ Unter Windows befindet sich die ausführbare Datei stattdessen unter `node\openc
 ```
 
 Innerhalb von opencode kann per `/connect` ein AI-Provider ausgewählt und konfiguriert werden.
+
+## Playwright MCP
+
+`opencode.json` startet den Playwright-MCP-Server über ein global installiertes `npx`.
+
+### Troubleshooting - Kein Node/npx installiert
+
+Wenn kein globales Node/npx installiert ist, kann Node/npx lokal installiert werden.
+
+#### Windows
+
+Mit folgendem Befehl kann Node/npx lokal installiert werden:
+
+```bash
+./mvnw.cmd -pl customer-management-client initialize
+```
+
+Danach kann die `opencode.json` folgendermaßen angepasst werden:
+
+```json
+"command": [
+  "cmd",
+  "/c",
+  "set \"PATH=%CD%\\customer-management-client\\node;%PATH%\" && node customer-management-client\\node\\node_modules\\npm\\bin\\npx-cli.js -y @playwright/mcp@latest"
+]
+```
+
+#### Linux / macOS
+
+Mit folgendem Befehl kann Node/npx lokal installiert werden:
+
+```bash
+./mvnw -pl customer-management-client initialize
+```
+
+Danach kann die `opencode.json` folgendermaßen angepasst werden:
+
+```json
+"command": [
+  "sh",
+  "-c",
+  "N=\"$PWD/customer-management-client/node\"; PATH=\"$N:$PATH\" exec node \"$N/node_modules/npm/bin/npx-cli.js\" -y @playwright/mcp@latest"
+]
+```
