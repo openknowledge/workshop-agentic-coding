@@ -41,16 +41,19 @@ function resolvePodmanDockerHost(): string | undefined {
   // Windows Podman machines expose a named pipe, not a Unix socket; `PodmanSocket.Path`
   // there holds an unusable forwarded Windows path, so we must use `PodmanPipe.Path` instead.
   if (process.platform === 'win32') {
-    try {
-      const pipePath = execFileSync(
-        'podman',
-        ['machine', 'inspect', '--format', '{{.ConnectionInfo.PodmanPipe.Path}}'],
-        { encoding: 'utf-8' }
-      ).trim();
-      return pipePath ? `npipe://${pipePath}` : undefined;
-    } catch {
+    const pipePath = execFileSync(
+      'podman',
+      ['machine', 'inspect', '--format', '{{.ConnectionInfo.PodmanPipe.Path}}'],
+      { encoding: 'utf-8' }
+    ).trim();
+
+    if (!pipePath) {
       return undefined;
     }
+
+    const normalizedPipePath = pipePath.replace(/\\/g, '/');
+
+    return `npipe://${normalizedPipePath}`;
   }
 
   // Rootless Linux exposes the socket directly; macOS runs Podman inside a VM,
@@ -119,7 +122,14 @@ export default async function globalSetup(): Promise<void> {
   }
   const environment = await new DockerComposeEnvironment(REPO_ROOT, 'docker-compose.yaml')
     .withStartupTimeout(STARTUP_TIMEOUT_MS)
-    .withWaitStrategy(BACKEND_CONTAINER, Wait.forHttp('/', BACKEND_CONTAINER_PORT))
+    // testcontainers' built-in HTTP wait strategy never succeeds with Podman on Windows
+    // (it keeps retrying even though the backend answers HTTP 200), so we wait for Spring
+    // Boot's startup log line instead. Other containers are ready once they log anything.
+    .withDefaultWaitStrategy(Wait.forLogMessage(/[\s\S]/))
+    .withWaitStrategy(
+      BACKEND_CONTAINER,
+      Wait.forLogMessage('Started CustomerManagementServerApplication')
+    )
     .withClientOptions(executable ? { executable } : {})
     .up();
   setEnvironment(environment);
