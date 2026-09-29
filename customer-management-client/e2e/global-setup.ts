@@ -37,21 +37,37 @@ function commandExists(command: string): boolean {
   }
 }
 
-function resolvePodmanSocketPath(): string | undefined {
-  // Rootless Linux exposes the socket directly; macOS/Windows run Podman inside a VM,
+function resolvePodmanDockerHost(): string | undefined {
+  // Windows Podman machines expose a named pipe, not a Unix socket; `PodmanSocket.Path`
+  // there holds an unusable forwarded Windows path, so we must use `PodmanPipe.Path` instead.
+  if (process.platform === 'win32') {
+    try {
+      const pipePath = execFileSync(
+        'podman',
+        ['machine', 'inspect', '--format', '{{.ConnectionInfo.PodmanPipe.Path}}'],
+        { encoding: 'utf-8' }
+      ).trim();
+      return pipePath ? `npipe://${pipePath}` : undefined;
+    } catch {
+      return undefined;
+    }
+  }
+
+  // Rootless Linux exposes the socket directly; macOS runs Podman inside a VM,
   // whose forwarded host-side socket path only `podman machine inspect` knows.
   const rootlessSocketPath = `/run/user/${userInfo().uid}/podman/podman.sock`;
   if (existsSync(rootlessSocketPath)) {
-    return rootlessSocketPath;
+    return `unix://${rootlessSocketPath}`;
   }
   try {
-    return execFileSync(
+    const socketPath = execFileSync(
       'podman',
       ['machine', 'inspect', '--format', '{{.ConnectionInfo.PodmanSocket.Path}}'],
       {
         encoding: 'utf-8',
       }
     ).trim();
+    return socketPath ? `unix://${socketPath}` : undefined;
   } catch {
     return undefined;
   }
@@ -64,9 +80,9 @@ function resolveComposeExecutable(): { executablePath: string } | undefined {
     return undefined;
   }
   if (!process.env.DOCKER_HOST) {
-    const socketPath = resolvePodmanSocketPath();
-    if (socketPath) {
-      process.env.DOCKER_HOST = `unix://${socketPath}`;
+    const dockerHost = resolvePodmanDockerHost();
+    if (dockerHost) {
+      process.env.DOCKER_HOST = dockerHost;
     }
   }
   // Ryuk bind-mounts the socket into its own container to clean up on exit, which fails
