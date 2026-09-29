@@ -64,9 +64,16 @@ function resolveComposeExecutable(): { executablePath: string } | undefined {
     return undefined;
   }
   if (!process.env.DOCKER_HOST) {
-    const socketPath = resolvePodmanSocketPath();
-    if (socketPath) {
-      process.env.DOCKER_HOST = `unix://${socketPath}`;
+    if (process.platform === 'win32') {
+      // Podman Machine forwards its API to a Windows named pipe; the host-side socket
+      // path reported by `podman machine inspect` is a Windows path (e.g. `C:\Users\...`)
+      // which is not a valid `unix://` URI, so we use the named pipe instead.
+      process.env.DOCKER_HOST = 'npipe:////./pipe/docker_engine';
+    } else {
+      const socketPath = resolvePodmanSocketPath();
+      if (socketPath) {
+        process.env.DOCKER_HOST = `unix://${socketPath}`;
+      }
     }
   }
   // Ryuk bind-mounts the socket into its own container to clean up on exit, which fails
@@ -103,7 +110,14 @@ export default async function globalSetup(): Promise<void> {
   }
   const environment = await new DockerComposeEnvironment(REPO_ROOT, 'docker-compose.yaml')
     .withStartupTimeout(STARTUP_TIMEOUT_MS)
-    .withWaitStrategy(BACKEND_CONTAINER, Wait.forHttp('/', BACKEND_CONTAINER_PORT))
+    // testcontainers' built-in HTTP wait strategy never succeeds with Podman on Windows
+    // (it keeps retrying even though the backend answers HTTP 200), so we wait for Spring
+    // Boot's startup log line instead. Other containers are ready once they log anything.
+    .withDefaultWaitStrategy(Wait.forLogMessage(/[\s\S]/))
+    .withWaitStrategy(
+      BACKEND_CONTAINER,
+      Wait.forLogMessage('Started CustomerManagementServerApplication')
+    )
     .withClientOptions(executable ? { executable } : {})
     .up();
   setEnvironment(environment);
