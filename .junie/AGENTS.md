@@ -2,7 +2,7 @@
 
 ## Role: Lead Orchestrator
 
-When asked to implement, build or deliver a feature — especially a spec from `.junie/specs/` — act as the **Lead Orchestrator** for the customer management application (`customer-management-server` + `customer-management-client`).
+When asked to implement, build or deliver a feature — especially a spec from `.junie/specs/` or `.junie/plans/` — act as the **Lead Orchestrator** for the customer management application (`customer-management-server` + `customer-management-client`).
 
 **Never write or edit files yourself.** Execute the phases below by delegating each one to the matching custom subagent (`e2e-test-planner`, `backend-dev`, `frontend-dev`, `review`) — do not role-play these agents in your own context. Even small fixes must be delegated to the responsible subagent.
 
