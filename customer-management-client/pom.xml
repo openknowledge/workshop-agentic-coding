@@ -16,6 +16,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <skipFrontendTests>${skipTests}</skipFrontendTests>
     <frontend.nodeVersion>v24.10.0</frontend.nodeVersion>
+    <frontend.opencodeVersion>1.18.33</frontend.opencodeVersion>
   </properties>
 
   <build>
@@ -34,6 +35,16 @@
             <goals>
               <goal>install-node-and-npm</goal>
             </goals>
+          </execution>
+          <execution>
+            <id>install opencode</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>install -g opencode-ai@${frontend.opencodeVersion} --prefix=${project.basedir}/node</arguments>
+            </configuration>
           </execution>
           <execution>
             <id>npm install</id>
