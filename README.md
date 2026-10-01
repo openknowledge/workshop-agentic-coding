@@ -61,4 +61,20 @@ npm install
 npm run dev
 ```
 
+### Installation von opencode
 
+Im Rahmen des Maven-Builds (`./mvnw clean install`) wird über das Frontend-Maven-Plugin automatisch auch [opencode](https://opencode.ai) lokal in `customer-management-client/node` installiert. Eine globale Installation ist nicht notwendig.
+
+Nach einem erfolgreichen `./mvnw clean install` kann opencode wie folgt gestartet werden:
+
+```bash
+./customer-management-client/node/bin/opencode
+```
+
+Unter Windows befindet sich die ausführbare Datei stattdessen unter `node\opencode.cmd`:
+
+```bash
+\customer-management-client\node\opencode.cmd
+```
+
+Innerhalb von opencode kann per `/connect` ein AI-Provider ausgewählt und konfiguriert werden.
