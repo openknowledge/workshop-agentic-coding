@@ -6,5 +6,6 @@
 !.mvn
 !.agents
 !.junie
+!.devcontainer
 */target/
 */node/

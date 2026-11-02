@@ -7,6 +7,8 @@ import istanbul from 'vite-plugin-istanbul';
 export default defineConfig({
   server: {
     host: true,
+    // Allow access through GitHub Codespaces port forwarding
+    allowedHosts: ['.app.github.dev'],
     proxy: {
       '/api': {
         target: process.env.VITE_BACKEND_ENDPOINT || 'http://127.0.0.1:8080',

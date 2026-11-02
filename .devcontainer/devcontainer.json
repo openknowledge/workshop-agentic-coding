@@ -1,0 +1,43 @@
+{
+  "name": "Customer Management Workshop",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21",
+      "installMaven": "false"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "hostRequirements": {
+    "cpus": 4
+  },
+  "forwardPorts": [8080, 5173, 9323],
+  "portsAttributes": {
+    "8080": {
+      "label": "Customer Management (docker compose)",
+      "onAutoForward": "notify"
+    },
+    "5173": {
+      "label": "Vite Dev Server",
+      "onAutoForward": "silent"
+    },
+    "9323": {
+      "label": "Playwright UI",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "postCreateCommand": "cd customer-management-client && npm ci && sudo env \"PATH=$PATH\" npx playwright install-deps chromium && npx playwright install chromium",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "ms-playwright.playwright",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  }
+}

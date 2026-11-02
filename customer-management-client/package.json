@@ -14,6 +14,8 @@
     "test": "playwright test",
     "test:dev": "cross-env PLAYWRIGHT_SKIP_DOCKER=true playwright test",
     "test:ui": "playwright test --ui",
+    "test:ui:remote": "playwright test --ui --ui-host=0.0.0.0 --ui-port=9323",
+    "test:ui:remote:dev": "cross-env PLAYWRIGHT_SKIP_DOCKER=true playwright test --ui --ui-host=0.0.0.0 --ui-port=9323",
     "test:ui:dev": "cross-env PLAYWRIGHT_SKIP_DOCKER=true playwright test --ui",
     "test:report": "playwright show-report",
     "test:unit": "vitest run",
