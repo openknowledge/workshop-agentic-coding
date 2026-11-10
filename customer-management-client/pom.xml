@@ -111,6 +111,17 @@
             </configuration>
           </execution>
           <execution>
+            <id>coverage-report</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <phase>test</phase>
+            <configuration>
+              <skip>${skipFrontendTests}</skip>
+              <arguments>run test:coverage:report</arguments>
+            </configuration>
+          </execution>
+          <execution>
             <id>coverage-check</id>
             <goals>
               <goal>npm</goal>
