@@ -29,6 +29,10 @@
     "test:coverage:check": "nyc check-coverage"
   },
   "nyc": {
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
     "branches": 95,
     "lines": 95,
     "functions": 95,
