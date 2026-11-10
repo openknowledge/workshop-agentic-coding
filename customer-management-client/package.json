@@ -26,7 +26,11 @@
     "test:coverage:report": "nyc report",
     "coverage:clean": "rimraf .nyc_output",
     "test:coverage": "npm run coverage:clean && npm run test:unit:coverage && npm run test:e2e:coverage && npm run test:coverage:report",
-    "test:coverage:check": "nyc check-coverage"
+    "test:coverage:check": "nyc check-coverage",
+    "prepare": "cd .. && husky customer-management-client/.husky"
+  },
+  "lint-staged": {
+    "{{src,tests,e2e}/**/*.{ts,tsx,css,json},*.ts}": "prettier --check"
   },
   "nyc": {
     "reporter": [
@@ -63,7 +67,9 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.22",
     "globals": "^16.4.0",
+    "husky": "^9.1.7",
     "jsdom": "^25.0.0",
+    "lint-staged": "^17.6.0",
     "nyc": "^18.0.0",
     "prettier": "^3.8.3",
     "rimraf": "^6.1.3",
